@@ -29,7 +29,7 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen(userProvider.select((u) => u.isFollowing), (prev, next) {
+    ref.listen(currentUserProvider.select((u) => u.isFollowing), (prev, next) {
       if (next == true) context.showAppSnackbar('フォローしました！');
       if (next == false) context.showAppSnackbar('フォローを解除しました！');
     });

@@ -9,7 +9,7 @@ class PostGridSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userId = ref.watch(userProvider.select((user) => user.id));
+    final userId = ref.watch(currentUserProvider.select((user) => user.id));
     final feedAsync = ref.watch(feedProvider(userId));
 
     return feedAsync.when(

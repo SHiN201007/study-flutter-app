@@ -70,7 +70,7 @@ class HomeProfileItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider);
+    final user = ref.watch(currentUserProvider);
     return Row(
       children: [
         Expanded(
@@ -104,12 +104,12 @@ class HomeProfileFollowButton extends ConsumerWidget {
   const HomeProfileFollowButton({super.key});
 
   void _onTapFollow(BuildContext context, WidgetRef ref) {
-    ref.read(userProvider.notifier).toggleFollow();
+    ref.read(currentUserProvider.notifier).toggleFollow();
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider);
+    final user = ref.watch(currentUserProvider);
     return ElevatedButton(
       onPressed: () => _onTapFollow(context, ref),
       style: ElevatedButton.styleFrom(
@@ -139,7 +139,7 @@ class HomeProfileFollowInfo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider);
+    final user = ref.watch(currentUserProvider);
     return Row(
       textBaseline: TextBaseline.alphabetic,
       mainAxisAlignment: MainAxisAlignment.start,

@@ -1,36 +1,22 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:study_app/features/post/post_provider.dart';
 import 'package:study_app/features/post/post_with_author.dart';
 import 'package:study_app/features/user/user_provider.dart';
 
-final feedProvider =
-    AsyncNotifierProvider.family<FeedNotifier, List<PostWithAuthor>, String>(
-      FeedNotifier.new,
-    );
+part 'feed_provider.g.dart';
 
-class FeedNotifier extends AsyncNotifier<List<PostWithAuthor>> {
-  FeedNotifier(this.authorId);
+@riverpod
+Future<List<PostWithAuthor>> feed(Ref ref, String authorId) async {
+  final postsFuture = ref.watch(postsProvider(authorId).future);
+  final usersFuture = ref.watch(usersByIdProvider.future);
 
-  final String authorId;
+  final (posts, users) = await (postsFuture, usersFuture).wait;
 
-  @override
-  Future<List<PostWithAuthor>> build() async {
-    return _combineFeeds();
-  }
-
-
-  Future<List<PostWithAuthor>> _combineFeeds() async {
-    final postsFuture = ref.watch(postProvider(authorId).future);
-    final usersFuture = ref.watch(usersByIdProvider.future);
-
-    final (posts, users) = await (postsFuture, usersFuture).wait;
-
-    return posts.map((post) {
-      final author = users[post.authorId];
-      if (author == null) {
-        throw Exception('Author not found');
-      }
-      return PostWithAuthor(post: post, author: author);
-    }).toList();
-  }
+  return posts.map((post) {
+    final author = users[post.authorId];
+    if (author == null) {
+      throw Exception('Author not found');
+    }
+    return PostWithAuthor(post: post, author: author);
+  }).toList();
 }
