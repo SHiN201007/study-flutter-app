@@ -9,8 +9,8 @@ class PostGridSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider);
-    final feedAsync = ref.watch(feedProvider(user.id));
+    final userId = ref.watch(userProvider.select((user) => user.id));
+    final feedAsync = ref.watch(feedProvider(userId));
 
     return feedAsync.when(
       error: (error, stackTrace) => Center(child: Text('Error: $error')),
@@ -23,7 +23,7 @@ class PostGridSection extends ConsumerWidget {
           childAspectRatio: 1,
         ),
         itemCount: feed.length,
-        padding: .zero,
+        padding: EdgeInsets.zero,
         itemBuilder: (context, index) =>
             _PostGridItem(index: index, feedItem: feed[index]),
       )
@@ -45,7 +45,7 @@ class _PostGridItem extends StatelessWidget {
         dimension: double.infinity,
         child: Stack(
           children: [
-            Center(child: Text('Post $index')),
+            Center(child: Text('Post ${feedItem.post.id}')),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -15,13 +15,16 @@ class FeedNotifier extends AsyncNotifier<List<PostWithAuthor>> {
 
   @override
   Future<List<PostWithAuthor>> build() async {
-    return _fetchDummyFeeds();
+    return _combineFeeds();
   }
 
 
-  Future<List<PostWithAuthor>> _fetchDummyFeeds() async {
-    final posts = await ref.watch(postProvider(authorId).future);
-    final users = await ref.watch(usersByIdProvider.future);
+  Future<List<PostWithAuthor>> _combineFeeds() async {
+    final postsFuture = ref.watch(postProvider(authorId).future);
+    final usersFuture = ref.watch(usersByIdProvider.future);
+
+    final (posts, users) = await (postsFuture, usersFuture).wait;
+
     return posts.map((post) {
       final author = users[post.authorId];
       if (author == null) {
