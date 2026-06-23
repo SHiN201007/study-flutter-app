@@ -1,45 +1,18 @@
-class User {
-  final String id;
-  final String handle;
-  final String name;
-  final int followersCount;
-  final int followingCount;
-  final bool isFollowing;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  const User({
-    required this.id,
-    required this.handle,
-    required this.name,
-    required this.followersCount,
-    required this.followingCount,
-    required this.isFollowing,
-  });
+part 'user.freezed.dart';
+part 'user.g.dart';
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'],
-      handle: json['handle'],
-      name: json['name'],
-      followersCount: json['followers_count'],
-      followingCount: json['following_count'],
-      isFollowing: json['is_following'],
-    );
-  }
+@freezed
+abstract class User with _$User {
+  const factory User({
+    required String id,
+    required String handle,
+    required String name,
+    required int followersCount,
+    required int followingCount,
+    required bool isFollowing,
+  }) = _User;
 
-  User copyWith({
-    String? handle,
-    String? name,
-    int? followersCount,
-    int? followingCount,
-    bool? isFollowing,
-  }) {
-    return User(
-      id: id,
-      handle: handle ?? this.handle,
-      name: name ?? this.name,
-      followersCount: followersCount ?? this.followersCount,
-      followingCount: followingCount ?? this.followingCount,
-      isFollowing: isFollowing ?? this.isFollowing,
-    );
-  }
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }
