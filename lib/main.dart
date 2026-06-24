@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:study_app/core/followlist_type.dart';
 import 'package:study_app/screens/followlist/followlist_screen.dart';
 import 'package:study_app/screens/home/home_screen.dart';
+import 'package:study_app/screens/profile/profile_screen.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
 
 enum AppRoute {
   home(path: '/', name: 'home'),
-  followlist(path: '/followlist/:type', name: 'followlist');
+  followlist(path: '/followlist/:type', name: 'followlist'),
+  profile(path: '/profile/:userId', name: 'profile');
 
   const AppRoute({required this.path, required this.name});
 
@@ -40,6 +42,13 @@ final GoRouter _goRouter = GoRouter(
       name: AppRoute.followlist.name,
       builder: (context, state) => FollowlistScreen(
         followListType: FollowListType.fromName(state.pathParameters['type']),
+      ),
+    ),
+    GoRoute(
+      path: AppRoute.profile.path,
+      name: AppRoute.profile.name,
+      builder: (context, state) => ProfileScreen(
+        userId: state.pathParameters['userId'] ?? 'unknown',
       ),
     ),
   ],

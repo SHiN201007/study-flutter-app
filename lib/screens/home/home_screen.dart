@@ -42,7 +42,10 @@ class HomeScreen extends ConsumerWidget {
             AppHeader(
               title: 'Home Header',
               onMenuPressed: () =>
-                  context.showAppSnackbar('Menu button pressed'),
+                context.pushNamed(
+                  AppRoute.profile.name,
+                  pathParameters: {'userId': ref.read(currentUserProvider).id},
+                ),
             ),
             const SizedBox(height: 12),
             HomeProfileSection(
