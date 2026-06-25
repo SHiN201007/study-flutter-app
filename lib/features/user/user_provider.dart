@@ -28,11 +28,27 @@ class CurrentUser extends _$CurrentUser {
   }
 
   Future<void> updateProfile(String name, String bio) async {
-    await ref.watch(userRepositoryProvider).updateProfile(name, bio);
-    state = state.copyWith(
-      name: name.trim(),
-      bio: bio.trim(),
-    );
+    final oldState = state;
+    try {
+      final newState = state.copyWith(name: name.trim(), bio: bio.trim());
+      state = newState;
+      await ref.read(userRepositoryProvider).updateProfile(name, bio);
+    }catch (e) {
+      state = oldState;
+      rethrow;
+    }
+  }
+
+  Future<void> updateProfileImage(String path) async {
+    final oldState = state;
+    try {
+      final newState = state.copyWith(localImagePath: path);
+      state = newState;
+      await ref.read(userRepositoryProvider).updateProfileImage(path);
+    }catch (e) {
+      state = oldState;
+      rethrow;
+    }
   }
 }
 

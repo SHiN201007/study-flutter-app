@@ -1,6 +1,3 @@
-
-
-import 'package:flutter/cupertino.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:study_app/models/user.dart';
 
@@ -28,6 +25,10 @@ class UserRepository {
   }
 
   Future<void> updateProfile(String name, String bio) async {
+    await Future.delayed(const Duration(seconds: 2));
+  }
+
+  Future<void> updateProfileImage(String path) async {
     await Future.delayed(const Duration(seconds: 2));
   }
 

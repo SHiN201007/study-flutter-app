@@ -12,6 +12,8 @@ abstract class User with _$User {
     required int followersCount,
     required int followingCount,
     required bool isFollowing,
+    String? imageUrl,
+    String? localImagePath,
     String? bio
   }) = _User;
 

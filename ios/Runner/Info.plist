@@ -66,5 +66,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>プロフィール画像を選択するために写真へのアクセスを許可してください</string>
+    <key>NSCameraUsageDescription</key>
+    <string>プロフィール画像を撮影するためにカメラへのアクセスを許可してください</string>
 </dict>
 </plist>
