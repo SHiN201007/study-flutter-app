@@ -1,5 +1,6 @@
 
 
+import 'package:flutter/cupertino.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:study_app/models/user.dart';
 
@@ -18,11 +19,16 @@ class UserRepository {
       followersCount: 100,
       followingCount: 100,
       isFollowing: false,
+      bio: 'I am a software engineer',
     );
   }
 
   Future<List<User>> getUsers() async {
     return _fetchDummyUsers();
+  }
+
+  Future<void> updateProfile(String name, String bio) async {
+    await Future.delayed(const Duration(seconds: 2));
   }
 
   Future<List<User>> _fetchDummyUsers() async {

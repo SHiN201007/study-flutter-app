@@ -12,6 +12,7 @@ abstract class User with _$User {
     required int followersCount,
     required int followingCount,
     required bool isFollowing,
+    String? bio
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

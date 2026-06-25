@@ -26,6 +26,14 @@ class CurrentUser extends _$CurrentUser {
           : state.followersCount + 1,
     );
   }
+
+  Future<void> updateProfile(String name, String bio) async {
+    await ref.watch(userRepositoryProvider).updateProfile(name, bio);
+    state = state.copyWith(
+      name: name.trim(),
+      bio: bio.trim(),
+    );
+  }
 }
 
 @riverpod
